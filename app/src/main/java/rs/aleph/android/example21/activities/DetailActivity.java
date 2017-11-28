@@ -258,17 +258,17 @@ public class DetailActivity extends AppCompatActivity {
 
                 break;
             case R.id.action_delete:
-               /* try {
-                    if (glumac != null) {
-                        getDatabaseHelper().getGlumacDao().delete(glumac);
+
+                    try {
+                        if (notes != null){
+                        getDatabaseHelper().getNotesDao().delete(notes);
+                        }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
                     }
+                    finish();
 
-                    showMessage("Actor deleted");
-
-                    finish(); //moramo pozvati da bi se vratili na prethodnu aktivnost
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }*/
+            
 
                 break;
         }
