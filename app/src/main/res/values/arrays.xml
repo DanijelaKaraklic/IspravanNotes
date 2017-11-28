@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     
-  <!--  <string-array name="product_names">
-        <item>Apples</item>
-        <item>Oranges</item>
-        <item>Bananas</item>
-    </string-array>-->
 
-   <!-- <string-array name="category_names">
-        <item>Fruit</item>
-        <item>Vegetables</item>
-    </string-array>-->
 
     <string-array name="pref_syncConnectionTypes_entries">
         <item>1 min</item>

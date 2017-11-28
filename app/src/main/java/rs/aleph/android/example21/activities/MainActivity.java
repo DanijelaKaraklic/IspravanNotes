@@ -39,16 +39,19 @@ public class MainActivity extends AppCompatActivity{
     private AlertDialog dialog;
     //za rad sa bazom
     private DatabaseHelper databaseHelper;
-    //private SharedPreferences sharedPreferences;
+    private SharedPreferences sharedPreferences;
 
 
 
 
-   // private int productId = 0;
-    private static int NOTIFICATION_ID = 1;
 
-    public static String NOTES = "selectedItemId";
+
+
+    public static final String NOTES = "selectedItemId";
+    public static final String TOAST = "pref_checkout_toast";
     private SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy.");
+
+    private boolean toast;
 
 
     @Override
@@ -56,65 +59,7 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.main);
-        //PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
-      /*  sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        final boolean toast = sharedPreferences.getBoolean("pref_checkout_toast",true);
-        final boolean notification = sharedPreferences.getBoolean("pref_checkout_notification",false);*/
-
-       /* //showing notification
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-        Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.ic_stat_buy);
-        builder.setSmallIcon(R.drawable.ic_stat_buy);
-        builder.setContentTitle("Title");
-        builder.setContentText("Content title");
-        builder.setLargeIcon(bitmap);
-
-        // Shows notification with the notification manager (notification ID is used to update the notification later on)
-        //umesto this aktivnost
-        NotificationManager manager = (NotificationManager)this.getSystemService(Context.NOTIFICATION_SERVICE);
-        manager.notify(NOTIFICATION_ID, builder.build());
-
-
-
-        //showing AboutDialog
-        if (dialog == null){
-            dialog = new AboutDialog(MainActivity.this).prepareDialog();
-        } else {
-            if (dialog.isShowing()) {
-                dialog.dismiss();
-            }
-        }
-
-        dialog.show();
-
-        //Pristupanje deljenim podesavanjima,primaju samo primitivne tipove
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        //default vrednost iz liste "1"
-        String s = sharedPreferences.getString("@string/pref_sync","1");
-        boolean b = sharedPreferences.getBoolean("@string/pref_sync",false);*/
-
-
-        //samples of views
-      /*  EditText name = (EditText) findViewById(R.id.name);
-        name.setText(product.getmName());
-
-        EditText description = (EditText) findViewById(R.id.description);
-        description.setText(product.getDescription());
-
-        RatingBar ratingBar = (RatingBar) findViewById(R.id.rating);
-        ratingBar.setRating(product.getRating());
-
-        ImageView imageView = (ImageView) findViewById(R.id.image);
-        InputStream is = null;
-        try {
-            is = getAssets().open(product.getImage());
-            Drawable drawable = Drawable.createFromStream(is, null);
-            imageView.setImageDrawable(drawable);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        */
-
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
 
 
@@ -150,17 +95,6 @@ public class MainActivity extends AppCompatActivity{
             e.printStackTrace();
         }
 
-
-
-
-
-
-
-
-
-
-
-
      }
 
     private void refresh() {
@@ -185,6 +119,14 @@ public class MainActivity extends AppCompatActivity{
     }
 
 
+    private void showMessage(String message){
+        toast = sharedPreferences.getBoolean(TOAST,false);
+        if (toast){
+            Toast.makeText(MainActivity.this,message,Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -198,13 +140,11 @@ public class MainActivity extends AppCompatActivity{
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        final boolean toast = sharedPreferences.getBoolean("@string/pref_checkout_toast",true);
-        final boolean notification = sharedPreferences.getBoolean("@string/pref_checkout_notification",false);
+
 
         switch (item.getItemId()) {
-            case R.id.action_about:
-             /*   if (dialog == null){
+      /*      case R.id.action_about:
+                if (dialog == null){
                     dialog = new AboutDialog(MainActivity.this).prepareDialog();
                 } else {
                     if (dialog.isShowing()) {
@@ -212,9 +152,9 @@ public class MainActivity extends AppCompatActivity{
                     }
                 }
 
-                dialog.show();*/
+                dialog.show();
 
-                break;
+                break;*/
             case R.id.action_add:
                 final Dialog dialog = new Dialog(MainActivity.this);
 
@@ -267,6 +207,7 @@ public class MainActivity extends AppCompatActivity{
 
                         try {
                             getDatabaseHelper().getNotesDao().create(notes);
+                            showMessage(getString(R.string.note_saved));
                             refresh();
                         } catch (SQLException e) {
                             e.printStackTrace();
@@ -281,6 +222,8 @@ public class MainActivity extends AppCompatActivity{
                 cancel.setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View v) {
+
+                        showMessage(getString(R.string.note_not_saved));
                         dialog.dismiss();
 
                     }
@@ -288,114 +231,11 @@ public class MainActivity extends AppCompatActivity{
 
                 dialog.show();
 
-             /*   final Dialog dialog = new Dialog(MainActivity.this);
-                dialog.setContentView(R.layout.dialog_layout);
-                dialog.setTitle("Input an actor");
-                final EditText name = (EditText)dialog.findViewById(R.id.actor_name);
-                final EditText surname = (EditText)dialog.findViewById(R.id.actor_surname);
-                final EditText rating = (EditText)dialog.findViewById(R.id.actor_rating);
-                final EditText biography = (EditText)dialog.findViewById(R.id.actor_biography);
-                final EditText birthday = (EditText)dialog.findViewById(R.id.actor_birthday);
-                Button ok = (Button) dialog.findViewById(R.id.ok);
-                ok.setOnClickListener(new View.OnClickListener(){
-                    @Override
-                    public void onClick(View v) {
 
-
-
-                        SimpleDateFormat sdf = new SimpleDateFormat("dd.mm.yyyy.");
-                        String nameA = name.getText().toString();
-                        if (nameA == ""){
-                            Toast.makeText(MainActivity.this, "Ime ne moze biti prazan string",Toast.LENGTH_SHORT).show();
-                            return;
-
-                        }
-
-
-                        String surnameA = surname.getText().toString();
-                        if (surnameA == ""){
-                            Toast.makeText(MainActivity.this, "Prezime ne moze biti prazan string",Toast.LENGTH_SHORT).show();
-                            return;
-
-                        }
-
-                        float ratingA = 0;
-                        try {
-                            ratingA = Float.parseFloat(rating.getText().toString());
-                        } catch (NumberFormatException e) {
-                            Toast.makeText(MainActivity.this, "Treba da unesete ocenu u obliku decimalnog broja.",Toast.LENGTH_SHORT).show();
-
-                            //e.printStackTrace();
-                        }
-                        String biographyA = biography.getText().toString();
-                        if (biographyA == ""){
-                            Toast.makeText(MainActivity.this, "Biografija ne moze biti prazan string",Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-
-                        Date birthdayA = null;
-                        try {
-                            birthdayA = sdf.parse(birthday.getText().toString());
-                        } catch (ParseException e) {
-                            Toast.makeText(MainActivity.this, "Treba da unesete datum u obliku dd.mm.yyyy.",Toast.LENGTH_SHORT).show();
-
-                            //e.printStackTrace();
-                        }
-
-                        Glumac glumac = new Glumac();
-                        glumac.setmName(nameA);
-                        glumac.setmSurname(surnameA);
-                        glumac.setmRating(ratingA);
-                        glumac.setmBiography(biographyA);
-                        glumac.setmBirthday(birthdayA);
-                        try {
-                            getDatabaseHelper().getGlumacDao().create(glumac);
-                            if (toast && notification){
-                                NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this);
-                                builder.setContentTitle("Dodavanje glumca");
-                                builder.setContentText("Uspesan unos glumca u bazu.");
-                                NotificationManager manager = (NotificationManager)MainActivity.this.getSystemService(Context.NOTIFICATION_SERVICE);
-                                manager.notify(NOTIFICATION_ID, builder.build());
-
-                                Toast.makeText(MainActivity.this, "Dodali ste glumca uspesno u bazu.",Toast.LENGTH_SHORT).show();
-
-                            }else if (!toast && notification){
-                                NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this);
-                                builder.setContentTitle("Dodavanje glumca");
-                                builder.setContentText("Uspesan unos glumca u bazu.");
-                                NotificationManager manager = (NotificationManager)MainActivity.this.getSystemService(Context.NOTIFICATION_SERVICE);
-                                manager.notify(NOTIFICATION_ID, builder.build());
-
-                            }else if (toast && !notification){
-
-                                Toast.makeText(MainActivity.this, "Dodali ste glumca uspesno u bazu.",Toast.LENGTH_SHORT).show();
-
-                            }
-
-                            refresh();
-                        } catch (SQLException e) {
-                            e.printStackTrace();
-                        }
-                        dialog.dismiss();
-
-                    }
-
-
-                });
-
-                Button cancel = (Button) dialog.findViewById(R.id.cancel);
-                cancel.setOnClickListener(new View.OnClickListener(){
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-
-                dialog.show();*/
 
                 break;
             case R.id.action_settings:
-                Intent intent = new Intent(MainActivity.this,SettingsActivity.class);
+                Intent intent = new Intent(MainActivity.this,PrefererencesActivity.class);
                 startActivity(intent);
 
                 break;

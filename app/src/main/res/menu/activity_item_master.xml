@@ -6,8 +6,8 @@
     <item
         android:id="@+id/action_about"
         android:title="@string/dialog_masetr_about"
-
-        app:showAsAction="never" />
+        android:icon="@drawable/ic_action_about"
+        app:showAsAction="always" />
 
     <item android:id="@+id/action_add"
         android:title="@string/master_toolbar_add"
@@ -16,5 +16,6 @@
 
     <item android:id="@+id/action_settings"
         android:title="@string/menu_settings"
-        app:showAsAction="never" />
+        android:icon="@drawable/ic_action_settings"
+        app:showAsAction="always" />
 </menu>

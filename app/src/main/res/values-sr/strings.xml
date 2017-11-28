@@ -49,6 +49,9 @@
     <string name="detail_title">Title</string>
     <string name="detail_description">Description</string>
     <string name="detail_date">Date</string>
+    <string name="note_saved">Note is saved.</string>
+    <string name="note_not_saved">Didn\'t save the note</string>
+    <string name="delete_note">Deleted note.</string>
 
 
 </resources>

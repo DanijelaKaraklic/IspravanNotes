@@ -21,12 +21,6 @@
         android:parentActivityName="rs.aleph.android.example21.activities.MainActivity"
 -->
         <activity
-            android:name="rs.aleph.android.example21.activities.SettingsActivity"
-            android:icon="@mipmap/ic_launcher"
-
-
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name="rs.aleph.android.example21.activities.DetailActivity"
             android:icon="@mipmap/ic_launcher"
 
