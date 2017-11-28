@@ -14,7 +14,7 @@
 
 
     <string name="dialog_about_title">About</string>
-    <string name="dialog_about_message">This is Example18 app which demonstrates usage of toasts, notifications, dialogs, preferences, toolbars and navigation drawers</string>
+    <string name="dialog_about_message">This application is made by Danijela Karaklic</string>
     <string name="dialog_about_yes">OK</string>
     <string name="dialog_about_no">Cancel</string>
 

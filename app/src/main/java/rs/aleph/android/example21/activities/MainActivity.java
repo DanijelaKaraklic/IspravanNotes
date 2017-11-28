@@ -31,6 +31,7 @@ import java.util.List;
 import rs.aleph.android.example21.R;
 import rs.aleph.android.example21.db.DatabaseHelper;
 import rs.aleph.android.example21.db.model.Notes;
+import rs.aleph.android.example21.dialogs.AboutDialog;
 
 public class MainActivity extends AppCompatActivity{
 
@@ -143,7 +144,7 @@ public class MainActivity extends AppCompatActivity{
 
 
         switch (item.getItemId()) {
-      /*      case R.id.action_about:
+            case R.id.action_about:
                 if (dialog == null){
                     dialog = new AboutDialog(MainActivity.this).prepareDialog();
                 } else {
@@ -154,7 +155,7 @@ public class MainActivity extends AppCompatActivity{
 
                 dialog.show();
 
-                break;*/
+                break;
             case R.id.action_add:
                 final Dialog dialog = new Dialog(MainActivity.this);
 
